@@ -8,7 +8,8 @@ function Library() {
   const [myBooks, setMyBooks] = useState([]);
   async function getBooks(){
     // object destructuring statement
-    let { data: books, error } = await supabase
+    // removed "error" variable to remove warning (was treated as error when deploying to netlify)
+    let { data: books } = await supabase
       .from('books')
       .select('*')
     setMyBooks(books);
@@ -115,11 +116,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <Bookshelf/>
+        <Library/>
+        <Bookshelf/>
         <ZineRack/>
         <CutePuppy/>
-        <MagicButton/> */}
-        <Library/>
+        <MagicButton/>
       </header>
       
     </div>
