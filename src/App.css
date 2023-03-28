@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.library, .libraryData {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+.libraryData {
+  padding: 10px 15px;
+  text-align: left;
+}

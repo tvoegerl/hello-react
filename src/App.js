@@ -1,6 +1,38 @@
 // import logo from './logo.svg';
 import './App.css';
 import puppy from './puppy.jfif';
+import { supabase } from './supabaseClient';
+import { useState } from 'react';
+
+function Library() {
+  const [myBooks, setMyBooks] = useState([]);
+  async function getBooks(){
+    // object destructuring statement
+    let { data: books, error } = await supabase
+      .from('books')
+      .select('*')
+    setMyBooks(books);
+  }
+  getBooks();
+  return (
+    <table className='library'>
+      <tr>
+        <th className='libraryData'>Title</th>
+        <th className='libraryData'>Author</th>
+        <th className='libraryData'>ISBN</th>
+      </tr>
+    {
+      myBooks.map(b => (
+        <tr>
+          <td className='libraryData'>{b.title}</td>
+          <td className='libraryData'>{b.author}</td>
+          <td className='libraryData'>{b.isbn}</td>
+        </tr>
+      ))
+    }
+    </table>
+  );
+}
 
 const magazines = [
   { id: 1, title: 'Architectural Digest', theme: 'architecture', isAvailable: true },
@@ -58,10 +90,14 @@ function Bookshelf() {
 
 
 function MagicButton() {
+  const [count, setCount] = useState(0)
+  function doMagic() {
+    setCount(count + 1);
+  }
   return (
     <div>
       <h5>This is a magic button</h5>
-      <button>Magic</button>
+      <button onClick={doMagic}>Magic {count}</button>
     </div>
   );
 }
@@ -79,10 +115,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Bookshelf/>
+        {/* <Bookshelf/>
         <ZineRack/>
         <CutePuppy/>
-        <MagicButton/>
+        <MagicButton/> */}
+        <Library/>
       </header>
       
     </div>
